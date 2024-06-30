@@ -1,0 +1,324 @@
+
+
+SpecialKey
+NonText
+Directory
+ErrorMsg
+IncSearch
+Search
+CurSearch
+MoreMsg
+ModeMsg
+LineNr
+CursorLineNr
+CursorLineSign
+CursorLineFold
+Question
+StatusLine
+StatusLineNC
+VertSplit
+Title
+Visual
+VisualNOS
+WarningMsg
+WildMenu
+Folded
+FoldColumn
+DiffAdd
+DiffChange
+DiffDelete
+DiffText
+SignColumn
+Conceal
+SpellBad
+SpellCap
+SpellRare
+SpellLocal
+Pmenu
+PmenuSel
+PmenuSbar
+PmenuThumb
+TabLine
+TabLineSel
+TabLineFill
+CursorColumn
+CursorLine
+ColorColumn
+QuickFixLine
+StatusLineTerm
+StatusLineTermNC
+Cursor
+lCursor
+Normal
+MatchParen
+ToolbarLine
+ToolbarButton
+Comment
+Constant
+Special
+Identifier
+Statement
+PreProc
+Type
+Underlined
+Error
+Todo
+debugPC
+debugBreakpoint
+EasyMotionTarget
+EasyMotionTargetDefault
+EasyMotionShadeDefault
+airline_x_inactive
+airline_x_inactive_bold
+airline_x_inactive_red
+airline_y_inactive
+airline_y_inactive_bold
+airline_y_inactive_red
+airline_z_inactive
+airline_z_inactive_bold
+airline_z_inactive_red
+airline_term_inactive
+airline_term_inactive_bold
+airline_term_inactive_red
+airline_error_inactive
+airline_error_inactive_bold
+airline_error_inactive_red
+airline_a_inactive
+airline_a_inactive_bold
+airline_a_inactive_red
+airline_b_inactive
+airline_b_inactive_bold
+airline_b_inactive_red
+airline_c_inactive
+airline_c_inactive_bold
+airline_c_inactive_red
+airline_warning_inactive
+airline_warning_inactive_bold
+airline_warning_inactive_red
+airline_x
+airline_x_bold
+airline_x_red
+airline_y
+airline_y_bold
+airline_y_red
+airline_z
+airline_z_bold
+airline_z_red
+airline_term
+airline_term_bold
+airline_term_red
+airline_error
+airline_error_bold
+airline_error_red
+airline_a
+airline_a_bold
+airline_a_red
+airline_b
+airline_b_bold
+airline_b_red
+airline_c
+airline_c_bold
+airline_c_red
+airline_warning
+airline_warning_bold
+airline_warning_red
+CtrlPwhite
+CtrlPlight
+CtrlPdark
+CtrlParrow1
+CtrlParrow2
+CtrlParrow3
+airline_tablabel
+airline_tab
+airline_tabsel
+airline_tabtype
+airline_tabfill
+airline_tabmod
+airline_tabmod_unsel
+airline_tabhid
+airline_tablabel_right
+airline_tab_right
+airline_tabsel_right
+airline_tabmod_right
+airline_tabhid_right
+airline_tabmod_unsel_right
+airline_a_to_airline_b
+airline_b_to_airline_c
+airline_c_to_airline_x
+airline_x_to_airline_y
+airline_y_to_airline_z
+airline_z_to_airline_warning
+airline_warning_to_airline_error
+airline_c1_inactive
+ALESignColumnWithoutErrors
+airline_tabfill_to_airline_tabfill
+airline_tabfill_to_airline_tablabel_right
+airline_tabsel_to_airline_tabfill
+airline_c1_to_airline_x
+airline_tab_to_airline_tabfill
+airline_c2_inactive
+airline_c1_inactive_bold
+airline_c1_inactive_red
+airline_tabfill_to_airline_tablabel_right_inactive
+airline_x_to_airline_y_inactive
+airline_c1_to_airline_x_inactive
+airline_z_to_airline_warning_inactive
+airline_tabfill_to_airline_tabfill_inactive
+airline_c_to_airline_x_inactive
+airline_tabsel_to_airline_tabfill_inactive
+airline_a_to_airline_b_inactive
+airline_warning_to_airline_error_inactive
+airline_tab_to_airline_tabfill_inactive
+airline_y_to_airline_z_inactive
+airline_b_to_airline_c_inactive
+airline_c1_to_airline_x_bold
+airline_c1_to_airline_x_red
+airline_tabsel_to_airline_tabhid
+airline_b_to_airline_c2
+airline_tabhid_to_airline_tabsel
+airline_c2_inactive_bold
+airline_c2_inactive_red
+airline_tabhid_to_airline_tabsel_inactive
+airline_tabsel_to_airline_tabhid_inactive
+airline_b_to_airline_c2_inactive
+airline_c3_inactive
+airline_c3_to_airline_x
+airline_b_to_airline_c2_bold
+airline_b_to_airline_c2_red
+airline_b_to_airline_c2_inactive_inactive
+airline_b_to_airline_c2_inactive_inactive_bold
+airline_b_to_airline_c2_inactive_inactive_red
+airline_c3_inactive_bold
+airline_c3_inactive_red
+airline_c3_to_airline_x_inactive
+airline_tabhid_to_airline_tab
+airline_c3_to_airline_x_bold
+airline_c3_to_airline_x_red
+airline_c3_to_airline_x_inactive_inactive
+airline_c3_to_airline_x_inactive_inactive_bold
+airline_c3_to_airline_x_inactive_inactive_red
+airline_tabhid_to_airline_tab_inactive
+airline_tabhid_to_airline_tabmod
+airline_tabmod_to_airline_tabfill
+airline_tabmod_to_airline_tabfill_inactive
+airline_tabhid_to_airline_tabmod_inactive
+airline_tab_to_airline_tabsel
+airline_tab_to_airline_tabsel_inactive
+airline_c4_inactive
+airline_c4_to_airline_x
+airline_tabsel_to_airline_tab
+airline_c4_inactive_bold
+airline_c4_inactive_red
+airline_c4_to_airline_x_inactive
+airline_tabsel_to_airline_tab_inactive
+airline_tabmod_to_airline_tab
+airline_c4_to_airline_x_bold
+airline_c4_to_airline_x_red
+airline_c4_to_airline_x_inactive_inactive
+airline_c4_to_airline_x_inactive_inactive_bold
+airline_c4_to_airline_x_inactive_inactive_red
+airline_tabmod_to_airline_tab_inactive
+airline_tab_to_airline_tabhid
+airline_tab_to_airline_tabhid_inactive
+airline_c5_inactive
+airline_c5_to_airline_x
+airline_c5_inactive_bold
+airline_c5_inactive_red
+airline_c5_to_airline_x_inactive
+airline_c5_to_airline_x_inactive_inactive
+airline_c5_to_airline_x_inactive_inactive_bold
+airline_c5_to_airline_x_inactive_inactive_red
+airline_c5_to_airline_x_bold
+airline_c5_to_airline_x_red
+airline_tab_to_airline_tabmod
+airline_tabmod_to_airline_tabhid
+airline_tab_to_airline_tabmod_inactive
+airline_tabmod_to_airline_tabhid_inactive
+airline_c6_inactive
+Constant	links to
+Constant	links to Number
+Constant	links to Boolean
+Number	links to Float
+Identifier	links to Function
+Statement	links to Conditional
+Statement	links to Repeat
+Statement	links to Label
+Statement	links to Operator
+Statement	links to Keyword
+Statement	links to Exception
+PreProc	links to Include
+PreProc	links to Define
+PreProc	links to Macro
+PreProc	links to PreCondit
+Type	links to StorageClass
+Type	links to Structure
+Type	links to Typedef
+Special	links to Tag
+Special	links to SpecialChar
+Special	links to Delimiter
+Special	links to SpecialComment
+Special	links to Debug
+Todo	links to luaTodo
+Comment	links to luaComment
+Error	links to luaParenError
+SpecialChar	links to luaSpecial
+Conditional	links to luaElse
+Operator	links to luaIn
+Statement	links to luaStatement
+Structure	links to luaTable
+Error	links to luaBraceError
+Error	links to luaError
+Function	links to luaFunction
+Conditional	links to luaCond
+Repeat	links to luaRepeat
+Label	links to luaLabel
+Operator	links to luaOperator
+Constant	links to luaConstant
+String	links to luaString2
+String	links to luaString
+Number	links to luaNumber
+Identifier	links to luaFunc
+Repeat	links to luaFor
+EasyMotionShadeDefault	links to EasyMotionShade
+Error	links to ALEErrorSign
+ALEErrorSign	links to ALEStyleErrorSign
+Todo	links to ALEWarningSign
+ALEWarningSign	links to ALEStyleWarningSign
+ALEWarningSign	links to ALEInfoSign
+Error	links to ALESignColumnWithErrors
+SpellBad	links to ALEError
+ALEError	links to ALEStyleError
+SpellCap	links to ALEWarning
+ALEWarning	links to ALEStyleWarning
+ALEWarning	links to ALEInfo
+ALEError	links to ALEVirtualTextError
+ALEVirtualTextError	links to ALEVirtualTextStyleError
+ALEWarning	links to ALEVirtualTextWarning
+ALEVirtualTextWarning	links to ALEVirtualTextStyleWarning
+ALEVirtualTextWarning	links to ALEVirtualTextInfo
+Ignore	links to NERDTreeIgnore
+Directory	links to NERDTreeUp
+Identifier	links to NERDTreeHelpKey
+Macro	links to NERDTreeHelpTitle
+Question	links to NERDTreeToggleOn
+WarningMsg	links to NERDTreeToggleOff
+Identifier	links to NERDTreeHelpCommand
+String	links to NERDTreeHelp
+Directory	links to NERDTreeDir
+Type	links to NERDTreeLinkTarget
+Macro	links to NERDTreeLinkFile
+Macro	links to NERDTreeLinkDir
+Identifier	links to NERDTreeDirSlash
+Directory	links to NERDTreeClosable
+Directory	links to NERDTreeOpenable
+WarningMsg	links to NERDTreeRO
+Identifier	links to NERDTreeBookmarkName
+Title	links to NERDTreeExecFile
+Number	links to NERDTreeFlags
+Statement	links to NERDTreeCWD
+Ignore	links to NERDTreeBookmarksLeader
+Statement	links to NERDTreeBookmarksHeader
+Normal	links to NERDTreeBookmark
+Special	links to NERDTreePart
+Type	links to NERDTreePartFile
+Search	links to NERDTreeCurrentNode
