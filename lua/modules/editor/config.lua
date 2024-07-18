@@ -1,6 +1,7 @@
 
 local config = {}
 local sessions_dir = vim.fn.stdpath("data") .. "/sessions/"
+local global = require("core.global")
 
 function config.nvim_treesitter()
 	vim.api.nvim_set_option_value("foldmethod", "expr", {})
@@ -116,7 +117,7 @@ function config.nvim_comment()
 end
 
 function config.hop()
-	require("hop").setup({ keys = "etoxqpdygfblzhckisuran" })
+	require("hop").setup({ keys = "etoxpdfblzhckisuran" })
 end
 
 function config.matchup()
@@ -201,7 +202,7 @@ function config.toggleterm()
 		persist_size = true,
 		direction = "horizontal",
 		close_on_exit = true, -- close the terminal window when the process exits
-		shell = vim.o.shell, -- change the default shell
+        shell = global.shell,
 	})
 end
 

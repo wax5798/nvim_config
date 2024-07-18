@@ -12,6 +12,7 @@ function global:load_variables()
 	self.modules_dir = self.vim_path .. path_sep .. "modules"
 	self.home = home
 	self.data_dir = string.format("%s/site/", vim.fn.stdpath("data"))
+    self.shell = "\"D:\\Program Files\\Git\\bin\\bash.exe\""
 
 	if global.is_mac then
 		self.python_host_prog = "/usr/bin/python"
