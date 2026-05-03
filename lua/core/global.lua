@@ -17,8 +17,8 @@ function global:load_variables()
 		self.python_host_prog = "/usr/bin/python"
 		self.python3_host_prog = "/usr/local/bin/python3"
 	elseif global.is_windows then
-		self.python_host_prog = "D:\\Program Files\\Python310\\python.exe"
-		self.python3_host_prog = "D:\\Program Files\\Python310\\python3.exe"
+		self.python_host_prog = "C:\\Users\\81090\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+		self.python3_host_prog = "C:\\Users\\81090\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
 	else
 		self.python_host_prog = "/usr/bin/python"
 		self.python3_host_prog = "/usr/bin/python3"

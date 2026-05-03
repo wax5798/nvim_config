@@ -1,18 +1,26 @@
 
 local load_core = function()
-	vim.g.mapleader = ","
+    vim.g.mapleader = ","
 
-	local Lazy = require("core.lazy")
+    if require("core.global").is_windows then
+        local bin_dir = vim.fn.stdpath("config") .. "\\bin"
+        vim.env.PATH = bin_dir .. ";" .. vim.env.PATH
+        if not os.getenv("HOME") then
+            vim.fn.setenv("HOME", vim.fn.expand("~"))
+        end
+    end
 
-	Lazy.check_and_install()
+    local Lazy = require("core.lazy")
 
-	require("core.options")
+    Lazy.check_and_install()
 
-	Lazy.load_plugins()
+    require("core.options")
 
-	require("core.keymap")
+    Lazy.load_plugins()
 
-	vim.cmd([[colorscheme catppuccin]])
+    require("core.keymap")
+
+    vim.cmd([[colorscheme catppuccin]])
 end
 
 load_core()

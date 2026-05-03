@@ -8,6 +8,7 @@ local completion = {
         dependencies = {
             "lukas-reineke/cmp-under-comparator",
             "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lua",
             "andersevenrud/cmp-tmux",
             "hrsh7th/cmp-path",
@@ -19,9 +20,11 @@ local completion = {
     {
         "L3MON4D3/LuaSnip",
         lazy = true,
-        dependencies = { "nvim-cmp" },
+        dependencies = { 
+            "nvim-cmp",
+            "rafamadriz/friendly-snippets",
+        },
         config = conf.luasnip,
-        dependencies = { "rafamadriz/friendly-snippets" },
     },
     {
         "windwp/nvim-autopairs",

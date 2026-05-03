@@ -114,54 +114,13 @@ function config.nord()
 end
 
 function config.catppuccin()
-	local function get_modified_palette()
-		-- We need to explicitly declare our new color.
-		-- (Because colors haven't been set yet when we pass them to the setup function.)
-
-		local cp = require("catppuccin.palettes").get_palette() -- Get the palette.
-		cp.none = "NONE" -- Special setting for complete transparent fg/bg.
-
-		if vim.g.catppuccin_flavour == "mocha" then -- We only modify the "mocha" palette.
-			cp.rosewater = "#F5E0DC"
-			cp.flamingo = "#F2CDCD"
-			cp.mauve = "#DDB6F2"
-			cp.pink = "#F5C2E7"
-			cp.red = "#F28FAD"
-			cp.maroon = "#E8A2AF"
-			cp.peach = "#F8BD96"
-			cp.yellow = "#FAE3B0"
-			cp.green = "#ABE9B3"
-			cp.blue = "#96CDFB"
-			cp.sky = "#89DCEB"
-			cp.teal = "#B5E8E0"
-			cp.lavender = "#C9CBFF"
-
-			cp.text = "#D9E0EE"
-			cp.subtext1 = "#BAC2DE"
-			cp.subtext0 = "#A6ADC8"
-			cp.overlay2 = "#C3BAC6"
-			cp.overlay1 = "#988BA2"
-			cp.overlay0 = "#6E6C7E"
-			cp.surface2 = "#6E6C7E"
-			cp.surface1 = "#575268"
-			cp.surface0 = "#302D41"
-
-			cp.base = "#1E1E2E"
-			cp.mantle = "#1A1826"
-			cp.crust = "#161320"
-		end
-
-		return cp
-	end
-
 	local function set_auto_compile(enable_compile)
-		-- Setting auto-compile for catppuccin.
 		if enable_compile then
 			vim.api.nvim_create_augroup("_catppuccin", { clear = true })
 
 			vim.api.nvim_create_autocmd("User", {
 				group = "_catppuccin",
-				pattern = "PackerCompileDone",
+				pattern = "LazyLoad",
 				callback = function()
 					require("catppuccin").compile()
 					vim.defer_fn(function()
@@ -172,17 +131,13 @@ function config.catppuccin()
 		end
 	end
 
-	vim.g.catppuccin_flavour = "mocha" -- Set flavour here
-	local cp = get_modified_palette()
-
-	local enable_compile = true -- Set to false if you would like to disable catppuccin cache. (Not recommended)
+	local enable_compile = true
 	set_auto_compile(enable_compile)
 
 	require("catppuccin").setup({
+		flavour = "mocha",
 		dim_inactive = {
 			enabled = false,
-			-- Dim inactive splits/windows/buffers.
-			-- NOT recommended if you use old palette (a.k.a., mocha).
 			shade = "dark",
 			percentage = 0.15,
 		},
@@ -238,7 +193,7 @@ function config.catppuccin()
 			barbar = false,
 			markdown = true,
 			lightspeed = false,
-			ts_rainbow = true,
+			rainbow_delimiters = true,
 			hop = true,
 			cmp = true,
 			dap = { enabled = true, enable_ui = true },
@@ -288,102 +243,50 @@ function config.catppuccin()
 			},
 		},
 		highlight_overrides = {
-			mocha = {
-				-- For base configs.
-				CursorLineNr = { fg = cp.green },
-				Search = { bg = cp.surface1, fg = cp.pink, style = { "bold" } },
-				IncSearch = { bg = cp.pink, fg = cp.surface1 },
+			mocha = function(cp)
+				return {
+					CursorLineNr = { fg = cp.green },
+					Search = { bg = cp.surface1, fg = cp.pink, style = { "bold" } },
+					IncSearch = { bg = cp.pink, fg = cp.surface1 },
 
-				-- For native lsp configs.
-				DiagnosticVirtualTextError = { bg = cp.none },
-				DiagnosticVirtualTextWarn = { bg = cp.none },
-				DiagnosticVirtualTextInfo = { bg = cp.none },
-				DiagnosticVirtualTextHint = { fg = cp.rosewater, bg = cp.none },
+					DiagnosticVirtualTextError = { bg = cp.none },
+					DiagnosticVirtualTextWarn = { bg = cp.none },
+					DiagnosticVirtualTextInfo = { bg = cp.none },
+					DiagnosticVirtualTextHint = { fg = cp.rosewater, bg = cp.none },
 
-				DiagnosticHint = { fg = cp.rosewater },
-				LspDiagnosticsDefaultHint = { fg = cp.rosewater },
-				LspDiagnosticsHint = { fg = cp.rosewater },
-				LspDiagnosticsVirtualTextHint = { fg = cp.rosewater },
-				LspDiagnosticsUnderlineHint = { sp = cp.rosewater },
+					DiagnosticHint = { fg = cp.rosewater },
 
-				-- For fidget.
-				FidgetTask = { bg = cp.none, fg = cp.surface2 },
-				FidgetTitle = { fg = cp.blue, style = { "bold" } },
+					["@field"] = { fg = cp.rosewater },
+					["@property"] = { fg = cp.yellow },
+					["@include"] = { fg = cp.teal },
+					["@operator"] = { fg = cp.sky },
+					["@keyword.operator"] = { fg = cp.sky },
+					["@punctuation.special"] = { fg = cp.maroon },
 
-				-- For treesitter.
-				TSField = { fg = cp.rosewater },
-				TSProperty = { fg = cp.yellow },
+					["@constructor"] = { fg = cp.lavender },
+					["@exception"] = { fg = cp.peach },
 
-				TSInclude = { fg = cp.teal },
-				TSOperator = { fg = cp.sky },
-				TSKeywordOperator = { fg = cp.sky },
-				TSPunctSpecial = { fg = cp.maroon },
+					["@constant.builtin"] = { fg = cp.lavender },
+					["@variable.builtin"] = { fg = cp.red, style = { "italic" } },
 
-				-- TSFloat = { fg = cp.peach },
-				-- TSNumber = { fg = cp.peach },
-				-- TSBoolean = { fg = cp.peach },
+					["@function.macro"] = { fg = cp.red, style = {} },
+					["@parameter"] = { fg = cp.rosewater },
+					["@keyword.function"] = { fg = cp.maroon },
+					["@keyword"] = { fg = cp.red },
+					["@keyword.return"] = { fg = cp.pink, style = {} },
 
-				TSConstructor = { fg = cp.lavender },
-				-- TSConstant = { fg = cp.peach },
-				-- TSConditional = { fg = cp.mauve },
-				-- TSRepeat = { fg = cp.mauve },
-				TSException = { fg = cp.peach },
+					["@method"] = { style = { "italic" } },
+					["@namespace"] = { fg = cp.rosewater },
 
-				TSConstBuiltin = { fg = cp.lavender },
-				-- TSFuncBuiltin = { fg = cp.peach, style = { "italic" } },
-				-- TSTypeBuiltin = { fg = cp.yellow, style = { "italic" } },
-				TSVariableBuiltin = { fg = cp.red, style = { "italic" } },
-
-				-- TSFunction = { fg = cp.blue },
-				TSFuncMacro = { fg = cp.red, style = {} },
-				TSParameter = { fg = cp.rosewater },
-				TSKeywordFunction = { fg = cp.maroon },
-				TSKeyword = { fg = cp.red },
-				TSKeywordReturn = { fg = cp.pink, style = {} },
-
-				-- TSNote = { fg = cp.base, bg = cp.blue },
-				-- TSWarning = { fg = cp.base, bg = cp.yellow },
-				-- TSDanger = { fg = cp.base, bg = cp.red },
-				-- TSConstMacro = { fg = cp.mauve },
-
-				-- TSLabel = { fg = cp.blue },
-				TSMethod = { style = { "italic" } },
-				TSNamespace = { fg = cp.rosewater },
-
-				TSPunctDelimiter = { fg = cp.teal },
-				TSPunctBracket = { fg = cp.overlay2 },
-				-- TSString = { fg = cp.green },
-				-- TSStringRegex = { fg = cp.peach },
-				-- TSType = { fg = cp.yellow },
-				TSVariable = { fg = cp.text },
-				TSTagAttribute = { fg = cp.mauve, style = { "italic" } },
-				TSTag = { fg = cp.peach },
-				TSTagDelimiter = { fg = cp.maroon },
-				TSText = { fg = cp.text },
-
-				-- TSURI = { fg = cp.rosewater, style = { "italic", "underline" } },
-				-- TSLiteral = { fg = cp.teal, style = { "italic" } },
-				-- TSTextReference = { fg = cp.lavender, style = { "bold" } },
-				-- TSTitle = { fg = cp.blue, style = { "bold" } },
-				-- TSEmphasis = { fg = cp.maroon, style = { "italic" } },
-				-- TSStrong = { fg = cp.maroon, style = { "bold" } },
-				-- TSStringEscape = { fg = cp.pink },
-
-				bashTSFuncBuiltin = { fg = cp.red, style = { "italic" } },
-				bashTSParameter = { fg = cp.yellow, style = { "italic" } },
-
-				luaTSField = { fg = cp.lavender },
-				luaTSConstructor = { fg = cp.flamingo },
-
-				javaTSConstant = { fg = cp.teal },
-
-				typescriptTSProperty = { fg = cp.lavender, style = { "italic" } },
-
-				cssTSType = { fg = cp.lavender },
-				cssTSProperty = { fg = cp.yellow, style = { "italic" } },
-
-				cppTSProperty = { fg = cp.text },
-			},
+					["@punctuation.delimiter"] = { fg = cp.teal },
+					["@punctuation.bracket"] = { fg = cp.overlay2 },
+					["@variable"] = { fg = cp.text },
+					["@tag.attribute"] = { fg = cp.mauve, style = { "italic" } },
+					["@tag"] = { fg = cp.peach },
+					["@tag.delimiter"] = { fg = cp.maroon },
+					["@text"] = { fg = cp.text },
+				}
+			end,
 		},
 	})
 end
@@ -503,7 +406,7 @@ function config.lualine()
 			icons_enabled = true,
 			theme = "catppuccin",
 			disabled_filetypes = {},
-			component_separators = "|",
+			component_separators = { left = "|", right = "|" },
 			section_separators = { left = "", right = "" },
 		},
 		sections = {
@@ -627,13 +530,14 @@ function config.nvim_tree()
 		hijack_netrw = true,
 		hijack_unnamed_buffer_when_opening = false,
 		open_on_tab = false,
-		sort_by = "name",
+		sort = {
+			sorter = "name",
+		},
 		update_cwd = true,
 		view = {
 			adaptive_size = false,
 			centralize_selection = false,
 			width = 30,
-			side = "left",
 			preserve_window_proportions = false,
 			number = false,
 			signcolumn = "yes",
@@ -666,7 +570,6 @@ function config.nvim_tree()
 					none = "  ",
 				},
 			},
-			root_folder_modifier = ":e",
 			icons = {
 				webdev_colors = true,
 				git_placement = "before",
@@ -676,32 +579,28 @@ function config.nvim_tree()
 					folder_arrow = false,
 					git = true,
 				},
-				padding = " ",
-				symlink_arrow = "  ",
 				glyphs = {
-					default = "", --
-					symlink = "",
-					bookmark = "",
+					default = "",
+					symlink = "",
+					bookmark = "",
 					git = {
-						unstaged = "",
-						staged = "", --
-						unmerged = "שׂ",
-						renamed = "", --
-						untracked = "ﲉ",
-						deleted = "",
-						ignored = "", --◌
+						unstaged = "",
+						staged = "",
+						unmerged = "",
+						renamed = "",
+						untracked = "",
+						deleted = "",
+						ignored = "",
 					},
 					folder = {
-						-- arrow_open = "",
-						-- arrow_closed = "",
 						arrow_open = "",
 						arrow_closed = "",
-						default = "",
-						open = "",
-						empty = "",
-						empty_open = "",
-						symlink = "",
-						symlink_open = "",
+						default = "",
+						open = "",
+						empty = "",
+						empty_open = "",
+						symlink = "",
+						symlink_open = "",
 					},
 				},
 			},
@@ -747,10 +646,10 @@ function config.nvim_tree()
 			show_on_dirs = false,
 			debounce_delay = 50,
 			icons = {
-				hint = "",
-				info = "",
-				warning = "",
-				error = "",
+				hint = "",
+				info = "",
+				warning = "",
+				error = "",
 			},
 		},
 		filesystem_watchers = {
@@ -762,10 +661,6 @@ function config.nvim_tree()
 			ignore = true,
 			show_on_dirs = true,
 			timeout = 400,
-		},
-		trash = {
-			cmd = "gio trash",
-			require_confirm = true,
 		},
 		live_filter = {
 			prefix = "[FILTER]: ",
@@ -804,7 +699,7 @@ function config.nvim_bufferline()
 			show_buffer_close_icons = true,
 			show_buffer_icons = true,
 			show_tab_indicators = true,
-			diagnostics = "nvim_lsp",
+			diagnostics = "nvim_diagnostic",
 			always_show_bufferline = true,
 			separator_style = "thin",
 			offsets = {
@@ -868,121 +763,114 @@ end
 function config.gitsigns()
 	require("gitsigns").setup({
 		signs = {
-			add = {
-				hl = "GitSignsAdd",
-				text = "│",
-				numhl = "GitSignsAddNr",
-				linehl = "GitSignsAddLn",
-			},
-			change = {
-				hl = "GitSignsChange",
-				text = "│",
-				numhl = "GitSignsChangeNr",
-				linehl = "GitSignsChangeLn",
-			},
-			delete = {
-				hl = "GitSignsDelete",
-				text = "_",
-				numhl = "GitSignsDeleteNr",
-				linehl = "GitSignsDeleteLn",
-			},
-			topdelete = {
-				hl = "GitSignsDelete",
-				text = "‾",
-				numhl = "GitSignsDeleteNr",
-				linehl = "GitSignsDeleteLn",
-			},
-			changedelete = {
-				hl = "GitSignsChange",
-				text = "~",
-				numhl = "GitSignsChangeNr",
-				linehl = "GitSignsChangeLn",
-			},
+			add = { text = "│" },
+			change = { text = "│" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
 		},
-		keymaps = {
-			-- Default keymap options
-			noremap = true,
-			buffer = true,
-			["n ]g"] = {
-				expr = true,
-				"&diff ? ']g' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'",
-			},
-			["n [g"] = {
-				expr = true,
-				"&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
-			},
-			["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-			["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-			["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-			["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-			["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-			["n <leader>hR"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-			["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-			["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line({full=true})<CR>',
-			-- Text objects
-			["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-			["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+		signs_staged = {
+			add = { text = "│" },
+			change = { text = "│" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
 		},
-		watch_gitdir = { interval = 1000, follow_files = true },
+		on_attach = function(bufnr)
+			local gs = require("gitsigns")
+
+			local function map(mode, l, r, opts)
+				opts = opts or {}
+				opts.buffer = bufnr
+				vim.keymap.set(mode, l, r, opts)
+			end
+
+			map("n", "]g", function()
+				if vim.wo.diff then
+					return "]g"
+				end
+				vim.schedule(function()
+					gs.next_hunk()
+				end)
+				return "<Ignore>"
+			end, { expr = true })
+
+			map("n", "[g", function()
+				if vim.wo.diff then
+					return "[g"
+				end
+				vim.schedule(function()
+					gs.prev_hunk()
+				end)
+				return "<Ignore>"
+			end, { expr = true })
+
+			map("n", "<leader>hs", gs.stage_hunk)
+			map("v", "<leader>hs", function()
+				gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+			end)
+			map("n", "<leader>hu", gs.undo_stage_hunk)
+			map("n", "<leader>hr", gs.reset_hunk)
+			map("v", "<leader>hr", function()
+				gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+			end)
+			map("n", "<leader>hR", gs.reset_buffer)
+			map("n", "<leader>hp", gs.preview_hunk)
+			map("n", "<leader>hb", function()
+				gs.blame_line({ full = true })
+			end)
+			map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+			map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+		end,
+		watch_gitdir = { follow_files = true },
 		current_line_blame = true,
-		current_line_blame_opts = { delay = 1000, virtual_text_pos = "eol" },
+		current_line_blame_opts = { delay = 1000, virt_text_pos = "eol" },
 		sign_priority = 6,
 		update_debounce = 100,
-		status_formatter = nil, -- Use default
+		status_formatter = nil,
 		word_diff = false,
-		diff_opts = { internal = true },
 	})
 end
 
 function config.indent_blankline()
-	require("indent_blankline").setup({
-		char = "│",
-		show_first_indent_level = true,
-		filetype_exclude = {
-			"startify",
-			"dashboard",
-			"dotooagenda",
-			"log",
-			"gitcommit",
-			"packer",
-			"vimwiki",
-			"markdown",
-			"json",
-			"txt",
-			"vista",
-			"help",
-			"todoist",
-			"NvimTree",
-			"peekaboo",
-			"git",
-			"TelescopePrompt",
-			"undotree",
-			"flutterToolsOutline",
-			"", -- for all buffers without a file type
+	require("ibl").setup({
+		indent = {
+			char = "│",
 		},
-		buftype_exclude = { "terminal", "nofile" },
-		show_trailing_blankline_indent = false,
-		show_current_context = true,
-		context_patterns = {
-			"class",
-			"function",
-			"method",
-			"block",
-			"list_literal",
-			"selector",
-			"^if",
-			"^table",
-			"if_statement",
-			"while",
-			"for",
-			"type",
-			"var",
-			"import",
+		scope = {
+			enabled = true,
 		},
-		space_char_blankline = " ",
+		exclude = {
+			filetypes = {
+				"startify",
+				"dashboard",
+				"dotooagenda",
+				"log",
+				"gitcommit",
+				"packer",
+				"vimwiki",
+				"markdown",
+				"json",
+				"txt",
+				"vista",
+				"help",
+				"todoist",
+				"NvimTree",
+				"peekaboo",
+				"git",
+				"TelescopePrompt",
+				"undotree",
+				"flutterToolsOutline",
+				"",
+			},
+			buftypes = { "terminal", "nofile" },
+		},
+		whitespace = {
+			remove_blankline_trail = false,
+		},
 	})
-	-- because lazy load indent-blankline so need readd this autocmd
-	vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
 
 function config.scrollview()

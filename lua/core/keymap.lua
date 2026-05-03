@@ -24,8 +24,8 @@ set_map("n", "<C-l>", "<C-w>l", {noremap = true})
 set_map("n", "<C-j>", "<C-w>j", {noremap = true})
 set_map("n", "<C-k>", "<C-w>k", {noremap = true})
 set_map("n", "<C-q>", ":qa<cr>", {noremap = true})
-set_map("n", "J", "<S-v>:m '>+1<cr>gv=gv<ESC>", {noremap = true, silent = true})
-set_map("n", "K", "<S-v>:m '<-2<cr>gv=gv<ESC>", {noremap = true, silent = true})
+-- set_map("n", "J", "<S-v>:m '>+1<cr>gv=gv<ESC>", {noremap = true, silent = true})
+-- set_map("n", "K", "<S-v>:m '<-2<cr>gv=gv<ESC>", {noremap = true, silent = true})
 set_map("n", "<leader>e", ":set et!<CR>", {noremap = true})
 set_map("n", "<tab>", "za", {noremap = true})
 
@@ -71,12 +71,11 @@ set_map("n", "<Leader>fz", ":Telescope zoxide list<cr>", {noremap = true, silent
 set_map("n", "<C-p>", ":Telescope find_files<cr>", {noremap = true, silent = true})
 
 -- Plugin trouble
-set_map("n", "gt", ":TroubleToggle<cr>", {noremap = true, silent = true})
-set_map("n", "gR", ":TroubleToggle lsp_references<cr>", {noremap = true, silent = true})
-set_map("n", "<leader>cd", ":TroubleToggle document_diagnostics<cr>", {noremap = true, silent = true})
-set_map("n", "<leader>cw", ":TroubleToggle workspace_diagnostics<cr>", {noremap = true, silent = true})
-set_map("n", "<leader>cq", ":TroubleToggle quickfix<cr>", {noremap = true, silent = true})
-set_map("n", "<leader>cl", ":TroubleToggle loclist<cr>", {noremap = true, silent = true})
+set_map("n", "gt", ":Trouble diagnostics toggle filter.buf=0<cr>", {noremap = true, silent = true})
+set_map("n", "<leader>cd", ":Trouble diagnostics toggle filter.buf=0<cr>", {noremap = true, silent = true})
+set_map("n", "<leader>cw", ":Trouble diagnostics toggle<cr>", {noremap = true, silent = true})
+set_map("n", "<leader>cq", ":Trouble qflist toggle<cr>", {noremap = true, silent = true})
+set_map("n", "<leader>cl", ":Trouble loclist toggle<cr>", {noremap = true, silent = true})
 
 -- Plugin nvim_wordshl
 set_map("n", "<F8>", ":WHLToggle<cr>", {noremap = true, silent = true})
@@ -137,3 +136,4 @@ set_map("n", "<space>k", "<cmd>lua require'hop'.hint_lines({ direction = require
 set_map("v", "<space>k", "<cmd>lua require'hop'.hint_lines({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {noremap = true, silent = true})
 set_map("n", "<space>f", "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
 set_map("v", "<space>f", "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
+

@@ -47,7 +47,6 @@ function config.cmp()
         },
         sorting = {
             comparators = {
-                -- require("cmp_tabnine.compare"),
                 compare.offset,
                 compare.exact,
                 compare.score,
@@ -61,7 +60,6 @@ function config.cmp()
         formatting = {
             format = function(entry, vim_item)
                 vim_item.menu = ({
-                    -- cmp_tabnine = "[TN]",
                     buffer = "[BUF]",
                     orgmode = "[ORG]",
                     nvim_lua = "[LUA]",
@@ -120,6 +118,8 @@ function config.cmp()
         },
         -- You should specify your *installed* sources.
         sources = {
+            { name = "lazydev", group_index = 0 },
+            { name = "nvim_lsp" },
             { name = "nvim_lua" },
             { name = "luasnip" },
             { name = "path" },
@@ -128,13 +128,17 @@ function config.cmp()
             { name = "orgmode" },
             { name = "buffer" },
             { name = "latex_symbols" },
-            -- { name = "cmp_tabnine" },
         },
     })
 end
 
 function config.luasnip()
-    vim.o.runtimepath = vim.o.runtimepath .. "," .. vim.fn.getenv("HOME") .. "/.config/nvim/my-snippets/,"
+    local global = require("core.global")
+    local path_sep = global.is_windows and "\\" or "/"
+    local snippet_dir = global.home .. path_sep .. ".config" .. path_sep .. "nvim" .. path_sep .. "my-snippets" .. path_sep
+    if vim.fn.isdirectory(snippet_dir) == 1 then
+        vim.o.runtimepath = vim.o.runtimepath .. "," .. snippet_dir
+    end
     require("luasnip").config.set_config({
         history = true,
         updateevents = "TextChanged,TextChangedI",
@@ -145,19 +149,14 @@ function config.luasnip()
     require("luasnip.loaders.from_snipmate").lazy_load()
 end
 
--- function config.tabnine()
-    -- 	local tabnine = require("cmp_tabnine.config")
-    -- 	tabnine:setup({ max_line = 1000, max_num_results = 20, sort = true })
-    -- end
+function config.autopairs()
+    require("nvim-autopairs").setup({})
 
-    function config.autopairs()
-        require("nvim-autopairs").setup({})
-
-        -- If you want insert `(` after select function or method item
-        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-        local cmp = require("cmp")
-        local handlers = require("nvim-autopairs.completion.handlers")
-        cmp.event:on(
+    -- If you want insert `(` after select function or method item
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    local cmp = require("cmp")
+    local handlers = require("nvim-autopairs.completion.handlers")
+    cmp.event:on(
         "confirm_done",
         cmp_autopairs.on_confirm_done({
             filetypes = {
@@ -175,7 +174,7 @@ end
                 tex = false,
             },
         })
-        )
-    end
+    )
+end
 
-    return config
+return config

@@ -4,8 +4,8 @@ local function load_options()
 	local global_local = {
 		termguicolors = true,
 		mouse = "a",
-		errorbells = true,
-		visualbell = true,
+		errorbells = false,
+		visualbell = false,
 		hidden = true,
 		fileformats = "unix,mac,dos",
 		magic = true,
@@ -97,13 +97,16 @@ local function load_options()
 		-- relativenumber = true,
 		foldenable = true,
 		signcolumn = "yes",
+		splitkeep = "screen",
 		conceallevel = 0,
 		concealcursor = "niv",
 		tags = "tags",
+		guifont = "JetBrainsMono Nerd Font:h12",
 	}
 
 	vim.g.python_host_prog = global.python_host_prog
 	vim.g.python3_host_prog = global.python3_host_prog
+	vim.g.loaded_perl_provider = 0
 	for name, value in pairs(global_local) do
 		vim.o[name] = value
 	end
