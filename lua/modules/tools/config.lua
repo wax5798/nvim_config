@@ -40,6 +40,9 @@ function config.telescope()
                     preview_width = 0.5,
                 },
             },
+            priview = {
+                timeout = 500, -- 默认为125ms
+            },
             file_previewer = require("telescope.previewers").vim_buffer_cat.new,
             grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
             qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,

@@ -26,6 +26,8 @@ set_map("n", "<C-k>", "<C-w>k", {noremap = true})
 set_map("n", "<C-q>", ":qa<cr>", {noremap = true})
 -- set_map("n", "J", "<S-v>:m '>+1<cr>gv=gv<ESC>", {noremap = true, silent = true})
 -- set_map("n", "K", "<S-v>:m '<-2<cr>gv=gv<ESC>", {noremap = true, silent = true})
+set_map("n", "<C-S-J>", "<S-v>:m '>+1<cr>gv=gv<ESC>", {noremap = true, silent = true})
+set_map("n", "<C-S-K>", "<S-v>:m '<-2<cr>gv=gv<ESC>", {noremap = true, silent = true})
 set_map("n", "<leader>e", ":set et!<CR>", {noremap = true})
 set_map("n", "<tab>", "za", {noremap = true})
 
@@ -55,6 +57,8 @@ set_map("c", "w!!", "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
 set_map("v", "<C-c>", '"+y', {noremap = true})
 set_map("v", "<", "<gv", {noremap = true})
 set_map("v", ">", ">gv", {noremap = true})
+set_map("v", "<C-S-J>", ":m '>+1<cr>gv=gv<ESC>", {noremap = true})
+set_map("v", "<C-S-K>", ":m '<-2<cr>gv=gv<ESC>", {noremap = true})
 
 
 -- ########################## plugin tools ########################## --
@@ -87,11 +91,11 @@ set_map("n", "j", "<Plug>(accelerated_jk_gj)", {noremap = true, silent = true})
 set_map("n", "k", "<Plug>(accelerated_jk_gk)", {noremap = true, silent = true})
 
 -- Plugin tagbar
-set_map("n", "<F4>", ":TagbarToggle<CR>", {noremap = true, silent = true})
+set_map("n", "<F4>", ":TagbarToggle<CR><C-w>=", {noremap = true, silent = true})
 
 -- ########################## plugin ui ########################## --
 -- Plugin nvim-tree
-set_map("n", "<C-n>", ":NvimTreeToggle<cr>", {noremap = true, silent = true})
+set_map("n", "<C-n>", ":NvimTreeToggle<cr><C-w>=", {noremap = true, silent = true})
 set_map("n", "<Leader>nf", ":NvimTreeFindFile<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>nr", ":NvimTreeRefresh<cr>", {noremap = true, silent = true})
 
@@ -118,7 +122,7 @@ set_map("n", "<Leader>u", ":UndotreeToggle<cr>", {noremap = true, silent = true}
 
 -- ########################## plugin editor ########################## --
 -- Plugin EasyAlign
-set_map("n", "ga", ":v:lua.enhance_align('nga')<cr>", {expr = true})
+-- set_map("n", "ga", ":v:lua.enhance_align('nga')<cr>", {expr = true})
 set_map("x", "ga", ":v:lua.enhance_align('xga')<cr>", {expr = true})
 
 -- nvim_comment
@@ -137,3 +141,5 @@ set_map("v", "<space>k", "<cmd>lua require'hop'.hint_lines({ direction = require
 set_map("n", "<space>f", "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
 set_map("v", "<space>f", "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = true, silent = true})
 
+-- Plugin toggleterm
+set_map("n", "<C-\\>", "<cmd>ToggleTerm<cr>", {noremap = true, silent = true})

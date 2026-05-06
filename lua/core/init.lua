@@ -19,6 +19,7 @@ local load_core = function()
     Lazy.load_plugins()
 
     require("core.keymap")
+    require("core.events");
 
     vim.cmd([[colorscheme catppuccin]])
 end

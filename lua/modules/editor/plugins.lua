@@ -83,7 +83,7 @@ local editor = {
         -- a smooth scrolling neovim plugin written in lua
         "karb94/neoscroll.nvim",
         lazy = true,
-        event = "BufReadPost",
+        -- event = "BufReadPost",
         config = conf.neoscroll,
     },
     {

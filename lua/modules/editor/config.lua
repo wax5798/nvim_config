@@ -1,6 +1,7 @@
 
 local config = {}
 local sessions_dir = vim.fn.stdpath("data") .. "/sessions/"
+local global = require("core.global")
 
 function config.nvim_treesitter()
     vim.env.CC = "gcc"
@@ -57,7 +58,7 @@ function config.nvim_comment()
 end
 
 function config.hop()
-    require("hop").setup({ keys = "etoxqpdygfblzhckisuran" })
+    require("hop").setup({ keys = "etoxpdfblzhckisuran" })
 end
 
 function config.matchup()
@@ -142,7 +143,7 @@ function config.toggleterm()
         persist_size = true,
         direction = "horizontal",
         close_on_exit = true, -- close the terminal window when the process exits
-        shell = vim.o.shell, -- change the default shell
+        shell = global.shell,
     })
 end
 
@@ -209,8 +210,11 @@ function config.dap()
 
     dap.adapters.lldb = {
         type = "executable",
-        command = "/usr/bin/lldb-vscode",
+        command = "lldb-vscode",
         name = "lldb",
+        config = {
+            platform = 'windows',
+        },
     }
     dap.configurations.cpp = {
         {
@@ -297,7 +301,7 @@ function config.dap()
 
     dap.adapters.python = {
         type = "executable",
-        command = require("core.global").python3_host_prog,
+        command = "python",
         args = { "-m", "debugpy.adapter" },
     }
     dap.configurations.python = {
