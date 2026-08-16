@@ -68,7 +68,7 @@ set_map("n", "<Leader>fr", ":lua require('telescope').extensions.frecency.frecen
 set_map("n", "<Leader>fe", ":Telescope oldfiles<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>ff", ":Telescope find_files<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>fc", ":Telescope colorscheme<cr>", {noremap = true, silent = true})
-set_map("n", "<Leader>fw", ":Telescope live_grep<cr>", {noremap = true, silent = true})
+set_map("n", "<Leader>fw", ":lua require('modules.tools.grep').live_grep()<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>fs", ":Telescope grep_string<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>fg", ":Telescope git_files<cr>", {noremap = true, silent = true})
 set_map("n", "<Leader>fz", ":Telescope zoxide list<cr>", {noremap = true, silent = true})

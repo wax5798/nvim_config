@@ -156,7 +156,7 @@ gitsigns.nvim
 | `,` | Leader 键 |
 | `<C-p>` | Telescope 查找文件 |
 | `<Leader>ff` | Telescope 文件搜索 |
-| `<Leader>fw` | Telescope 字符串搜索 |
+| `<Leader>fw` | Telescope 字符串搜索（默认开启预览，`<A-p>` 开关） |
 | `<Leader>fg` | Telescope Git 文件 |
 | `<Leader>fs` | Telescope 符号搜索 |
 | `<C-n>` | NvimTree 切换 |
@@ -174,6 +174,10 @@ gitsigns.nvim
 | `j/k` | 加速的 jk 移动 |
 | `ga` | EasyAlign 对齐 |
 | `<Leader>tt` | ToggleTerm 终端 |
+
+### Telescope 搜索预览
+
+`<Leader>fw`（字符串搜索）默认**开启预览**，方便查看匹配上下文。若在大项目/大文件下感觉卡顿，可在搜索框内按 `<A-p>` 随时**切换预览的开关**。
 
 ---
 

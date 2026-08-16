@@ -8,6 +8,7 @@ function config.telescope()
     -- vim.cmd([[packadd telescope-zoxide]])
 
     local telescope_actions = require("telescope.actions.set")
+    local layout_actions = require("telescope.actions.layout")
     local fixfolds = {
         hidden = true,
         attach_mappings = function(_)
@@ -23,7 +24,9 @@ function config.telescope()
         end,
     }
     local grep_folds = {
-        attach_mappings = function(_)
+        attach_mappings = function(_, map)
+            map("i", "<A-p>", layout_actions.toggle_preview)
+            map("n", "<A-p>", layout_actions.toggle_preview)
             telescope_actions.select:enhance({
                 post = function()
                     vim.cmd(":normal! zx")
@@ -51,8 +54,9 @@ function config.telescope()
             path_display = { "smart" },
             file_ignore_patterns = { ".git/", ".vscode/", ".cache", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "tags", "node_modules", "target", "build", "dist", "vendor", "__pycache__" },
             vimgrep_arguments = {
-                "rg", "--follow", "--color=never", "--no-heading",
+                "rg", "--color=never", "--no-heading",
                 "--with-filename", "--line-number", "--column", "--smart-case",
+                "--max-filesize", "10M",
                 "--glob", "!.git",
                 "--glob", "!.vscode",
                 "--glob", "!.cache",
@@ -62,11 +66,26 @@ function config.telescope()
                 "--glob", "!dist",
                 "--glob", "!vendor",
                 "--glob", "!__pycache__",
+                "--glob", "!tags",
                 "--glob", "!*.class",
                 "--glob", "!*.pdf",
                 "--glob", "!*.mkv",
                 "--glob", "!*.mp4",
                 "--glob", "!*.zip",
+                "--glob", "!*.pyc",
+                "--glob", "!*.o",
+                "--glob", "!*.obj",
+                "--glob", "!*.pdb",
+                "--glob", "!*.dll",
+                "--glob", "!*.exe",
+                "--glob", "!*.lib",
+                "--glob", "!*.a",
+                "--glob", "!bin",
+                "--glob", "!out",
+                "--glob", "!Debug",
+                "--glob", "!Release",
+                "--glob", "!.vs",
+                "--glob", "!data",
             },
             layout_config = {
                 prompt_position = "bottom",
