@@ -19,6 +19,7 @@ function config.mason_lspconfig()
     require("mason-lspconfig").setup({
         ensure_installed = server_names,
         automatic_installation = true,
+        automatic_enable = false,
     })
 end
 
@@ -72,7 +73,8 @@ function config.lspconfig()
         })
     end
 
-    vim.lsp.enable(server_names)
+    local enable_names = { "pyright", "lua_ls", "rust_analyzer", "html", "cssls" }
+    vim.lsp.enable(enable_names)
 
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)

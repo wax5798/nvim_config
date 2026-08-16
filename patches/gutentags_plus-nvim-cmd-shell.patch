@@ -1,0 +1,59 @@
+diff --git a/plugin/gutentags_plus.vim b/plugin/gutentags_plus.vim
+index 067666a..9e91a57 100644
+--- a/plugin/gutentags_plus.vim
++++ b/plugin/gutentags_plus.vim
+@@ -44,6 +44,36 @@ function! s:ErrorMsg(msg)
+ 	echohl NONE
+ endfunc
+ 
++"----------------------------------------------------------------------
++" run a shell command through cmd.exe
++"
++" Neovim on win32 dispatches string commands via &shell. When that shell
++" is a bash-like one (MSYS2 / Git for Windows) nvim still appends /s /c,
++" which bash cannot parse, so every system()/jobstart() string call fails
++" with "/usr/bin/bash: /s: No such file or directory". Route the cmd.exe
++" style commands (cd /d, *.cmd runners) through cmd.exe instead.
++"----------------------------------------------------------------------
++function! s:run_win32(cmd, list)
++	if (has('win32') || has('win64')) && &shell !~# 'cmd\.exe$'
++		let l:old_shell = &shell
++		let l:old_shellcmdflag = &shellcmdflag
++		let &shell = 'cmd.exe'
++		let &shellcmdflag = '/s /c'
++	endif
++	try
++		if a:list
++			return systemlist(a:cmd)
++		else
++			return system(a:cmd)
++		endif
++	finally
++		if exists('l:old_shell')
++			let &shell = l:old_shell
++			let &shellcmdflag = l:old_shellcmdflag
++		endif
++	endtry
++endfunc
++
+ 
+ "----------------------------------------------------------------------
+ " search gtags db by gutentags buffer variable
+@@ -217,7 +247,7 @@ function! s:GtagsCscope(exename, root, database, pattern, word, override)
+ 	let cmd = cmd . ' -d '
+ 	let cmd = cmd . ' -F ' . shellescape(dbname)
+ 	let cmd = cmd . ' -L -' . num . ' ' . shellescape(a:word)
+-	let content = system(cmd)
++	let content = s:run_win32(cmd, 0)
+ 	if v:shell_error != 0
+ 		redraw
+ 		let hr = substitute(content, '[\n\r]', ' ', 'g')
+@@ -478,7 +508,7 @@ function! s:global_taglist(pattern) abort
+ 	let pwd = getcwd()
+ 	let $GTAGSDBPATH = fnamemodify(dbname, ':p:h')
+ 	let $GTAGSROOT = root
+-	let lst = systemlist('global --result=cscope -a "'. a:pattern . '"')
++	let lst = s:run_win32('global --result=cscope -a "'. a:pattern . '"', 1)
+ 	let rsl_list = []
+ 	for li in lst
+ 		let tag_info = {}

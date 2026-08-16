@@ -14,6 +14,22 @@ function config.telescope()
             telescope_actions.select:enhance({
                 post = function()
                     vim.cmd(":normal! zx")
+                    if vim.bo.filetype == "" then
+                        vim.cmd("filetype detect")
+                    end
+                end,
+            })
+            return true
+        end,
+    }
+    local grep_folds = {
+        attach_mappings = function(_)
+            telescope_actions.select:enhance({
+                post = function()
+                    vim.cmd(":normal! zx")
+                    if vim.bo.filetype == "" then
+                        vim.cmd("filetype detect")
+                    end
                 end,
             })
             return true
@@ -32,26 +48,42 @@ function config.telescope()
             results_title = false,
             borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
             layout_strategy = "horizontal",
-            path_display = { "absolute" },
-            file_ignore_patterns = { ".git/", ".cache", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "tags" },
+            path_display = { "smart" },
+            file_ignore_patterns = { ".git/", ".vscode/", ".cache", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "tags", "node_modules", "target", "build", "dist", "vendor", "__pycache__" },
+            vimgrep_arguments = {
+                "rg", "--follow", "--color=never", "--no-heading",
+                "--with-filename", "--line-number", "--column", "--smart-case",
+                "--glob", "!.git",
+                "--glob", "!.vscode",
+                "--glob", "!.cache",
+                "--glob", "!node_modules",
+                "--glob", "!target",
+                "--glob", "!build",
+                "--glob", "!dist",
+                "--glob", "!vendor",
+                "--glob", "!__pycache__",
+                "--glob", "!*.class",
+                "--glob", "!*.pdf",
+                "--glob", "!*.mkv",
+                "--glob", "!*.mp4",
+                "--glob", "!*.zip",
+            },
             layout_config = {
                 prompt_position = "bottom",
                 horizontal = {
                     preview_width = 0.5,
                 },
             },
-            priview = {
-                timeout = 500, -- 默认为125ms
+            preview = {
+                timeout = 250, -- 默认为125ms
             },
             file_previewer = require("telescope.previewers").vim_buffer_cat.new,
             grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
             qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-            file_sorter = require("telescope.sorters").get_fuzzy_file,
-            generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
         },
         extensions = {
             fzf = {
-                fuzzy = false,
+                fuzzy = true,
                 override_generic_sorter = true,
                 override_file_sorter = true,
                 case_mode = "smart_case",
@@ -66,8 +98,8 @@ function config.telescope()
             buffers = fixfolds,
             find_files = fixfolds,
             git_files = fixfolds,
-            grep_string = fixfolds,
-            live_grep = fixfolds,
+            grep_string = grep_folds,
+            live_grep = grep_folds,
             oldfiles = fixfolds,
         },
     })

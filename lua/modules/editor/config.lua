@@ -21,6 +21,32 @@ function config.nvim_treesitter()
     })
 end
 
+function config.render_markdown()
+    require("render-markdown").setup({
+        code = {
+            border = "none",
+            conceal_delimiters = false,
+        },
+        win_options = {
+            conceallevel = { rendered = 0 },
+        },
+    })
+end
+
+function config.aerial()
+    require("aerial").setup({
+        backends = { "treesitter", "lsp", "markdown", "asciidoc", "man" },
+        layout = {
+            default_direction = "prefer_right",
+            max_width = { 40, 0.2 },
+            min_width = 10,
+        },
+        manage_folds = false,
+        nerd_font = "auto",
+        icons = {},
+    })
+end
+
 function config.illuminate()
     -- Use background for "Visual" as highlight for words. Change this behavior here!
     if vim.api.nvim_get_hl_by_name("Visual", true).background then

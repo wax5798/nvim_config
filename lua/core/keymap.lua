@@ -81,6 +81,14 @@ set_map("n", "<leader>cw", ":Trouble diagnostics toggle<cr>", {noremap = true, s
 set_map("n", "<leader>cq", ":Trouble qflist toggle<cr>", {noremap = true, silent = true})
 set_map("n", "<leader>cl", ":Trouble loclist toggle<cr>", {noremap = true, silent = true})
 
+-- Plugin gutentags_plus (GNU Global): C/C++ 非 LSP 跳转，作用域感知
+set_map("n", "<leader>cg", "<Plug>GscopeFindDefinition", {noremap = true, silent = true})
+set_map("n", "<leader>cz", "<Plug>GscopeFindCtag", {noremap = true, silent = true})
+set_map("n", "<leader>cs", "<Plug>GscopeFindSymbol", {noremap = true, silent = true})
+set_map("n", "<leader>cc", "<Plug>GscopeFindCallingFunc", {noremap = true, silent = true})
+set_map("n", "<leader>ct", "<Plug>GscopeFindText", {noremap = true, silent = true})
+set_map("n", "<leader>ck", ":GscopeKill<cr>", {noremap = true, silent = true})
+
 -- Plugin nvim_wordshl
 set_map("n", "<F8>", ":WHLToggle<cr>", {noremap = true, silent = true})
 set_map("c", "<F8>", "WHLToggle ", {noremap = true})
@@ -90,8 +98,8 @@ set_map("v", "<F8>", '"ty:WHLToggle <C-r>t<cr>', {noremap = true})
 set_map("n", "j", "<Plug>(accelerated_jk_gj)", {noremap = true, silent = true})
 set_map("n", "k", "<Plug>(accelerated_jk_gk)", {noremap = true, silent = true})
 
--- Plugin tagbar
-set_map("n", "<F4>", ":TagbarToggle<CR><C-w>=", {noremap = true, silent = true})
+-- Plugin aerial
+set_map("n", "<F4>", ":AerialToggle<CR><C-w>=", {noremap = true, silent = true})
 
 -- ########################## plugin ui ########################## --
 -- Plugin nvim-tree

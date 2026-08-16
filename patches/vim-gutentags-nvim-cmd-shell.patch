@@ -1,0 +1,129 @@
+diff --git a/autoload/gutentags.vim b/autoload/gutentags.vim
+index 1495b33..a3141c1 100644
+--- a/autoload/gutentags.vim
++++ b/autoload/gutentags.vim
+@@ -359,17 +359,37 @@ function! gutentags#on_vim_leave_pre() abort
+ endfunction
+ 
+ function! gutentags#on_vim_leave() abort
+-    if has('win32') && !has('nvim')
+-        " Vim8 doesn't seem to be killing child processes soon enough for
+-        " us to clean things up inside this plugin, so do it ourselves.
+-        " TODO: test other platforms and other vims
++    if has('win32')
++        " Vim8 and nvim don't seem to be killing child processes soon enough
++        " for us to clean things up inside this plugin, so do it ourselves.
++        " On win32 nvim also BLOCKS at exit while any non-detached job is
++        " still running, which makes :wq hang during the initial generation
++        " of a large project. Stop the jobs here, before nvim tears down.
++        " The grandchild (ctags/gtags) usually survives jobstop() briefly, so
++        " give it a moment, then remove the partial tags/DB it may have left
++        " mid-write. Otherwise the next session runs --incremental against a
++        " corrupt DB and errors out ("corrupted").
+         for module in g:gutentags_modules
+             for upd_info in s:update_in_progress[module]
+                 let l:job = upd_info[1]
+-                call job_stop(l:job, "term")
+-                let l:status = job_status(l:job)
+-                if l:status == "run"
+-                    call job_stop(l:job, "kill")
++                let l:tags_file = upd_info[0]
++                if has('nvim')
++                    call jobstop(l:job)
++                else
++                    call job_stop(l:job, "term")
++                    let l:status = job_status(l:job)
++                    if l:status == "run"
++                        call job_stop(l:job, "kill")
++                    endif
++                endif
++                if has('nvim') && module == 'gtags_cscope'
++                    sleep 1
++                    try | call delete(l:tags_file) | endtry
++                endif
++                if has('nvim') && module == 'ctags'
++                    try | call delete(l:tags_file) | endtry
++                    try | call delete(l:tags_file.'.temp') | endtry
++                    try | call delete(l:tags_file.'.lock') | endtry
+                 endif
+             endfor
+         endfor
+@@ -637,7 +657,11 @@ if has('nvim')
+     endfunction
+ 
+     function! gutentags#build_default_job_options(module) abort
+-       " Neovim kills jobs on exit, which is what we want.
++       " Do NOT detach: a detached cmd.exe has no console, so the console
++       " apps it spawns (ctags/gtags) each get a fresh, visible console
++       " window. Non-detached jobs share nvim's hidden console (no window).
++       " The :wq hang is instead solved in gutentags#on_vim_leave(), which
++       " stops in-flight jobs before nvim exits.
+        let l:job_opts = {
+                 \'on_exit': function(
+                 \    '<SID>nvim_job_exit_wrapper',
+@@ -653,6 +677,22 @@ if has('nvim')
+     endfunction
+ 
+     function! gutentags#start_job(cmd, opts) abort
++        " Neovim dispatches string commands through &shell. When it auto-detects
++        " a bash-like shell (MSYS2 / Git for Windows) it appends /s /c, which
++        " bash cannot parse. The plat/win32/*.cmd runners are written for
++        " cmd.exe, so route those spawns through cmd.exe instead.
++        if has('win32') && &shell !~# 'cmd\.exe$' && &shell !~# 'pwsh\|powershell'
++            let l:old_shell = &shell
++            let l:old_shellcmdflag = &shellcmdflag
++            let &shell = 'cmd.exe'
++            let &shellcmdflag = '/s /c'
++            try
++                return jobstart(a:cmd, a:opts)
++            finally
++                let &shell = l:old_shell
++                let &shellcmdflag = l:old_shellcmdflag
++            endtry
++        endif
+         return jobstart(a:cmd, a:opts)
+     endfunction
+ else
+diff --git a/autoload/gutentags/gtags_cscope.vim b/autoload/gutentags/gtags_cscope.vim
+index 6a72243..c35075a 100644
+--- a/autoload/gutentags/gtags_cscope.vim
++++ b/autoload/gutentags/gtags_cscope.vim
+@@ -1,9 +1,8 @@
+ " gtags_cscope module for Gutentags
+ 
+-if !has('cscope')
+-    throw "Can't enable the gtags-cscope module for Gutentags, "
+-                \"this Vim has no support for cscope files."
+-endif
++" Neovim 0.5+ dropped cscope support, but this module only uses it for the
++" optional `cs add` integration. gutentags_plus runs gtags-cscope directly,
++" so the guard below is removed to allow GTAGS generation on modern Neovim.
+ 
+ " Global Options {{{
+ 
+@@ -62,7 +61,9 @@ function! gutentags#gtags_cscope#init(project_root) abort
+ 
+     let b:gutentags_files['gtags_cscope'] = l:db_file
+ 
+-    execute 'set cscopeprg=' . fnameescape(g:gutentags_gtags_cscope_executable)
++    if has('cscope')
++        execute 'set cscopeprg=' . fnameescape(g:gutentags_gtags_cscope_executable)
++    endif
+ 
+     " The combination of gtags-cscope, vim's cscope and global files is
+     " a bit flaky. Environment variables are safer than vim passing
+diff --git a/plat/win32/update_tags.cmd b/plat/win32/update_tags.cmd
+index 05908ab..341b000 100644
+--- a/plat/win32/update_tags.cmd
++++ b/plat/win32/update_tags.cmd
+@@ -90,7 +90,9 @@ rem ==========================================
+ rem               GENERATE TAGS
+ rem ==========================================
+ 
+-if [%LOG_FILE%]==[] set LOG_FILE=CON
++rem NUL instead of CON: nvim spawns these with a hidden console, and the
++rem script output is captured by the job anyway, so swallow it.
++if [%LOG_FILE%]==[] set LOG_FILE=NUL
+ 
+ echo Locking tags file... > %LOG_FILE%
+ echo locked > "%TAGS_FILE%.lock"

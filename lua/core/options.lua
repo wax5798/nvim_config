@@ -96,13 +96,22 @@ local function load_options()
         number = true,
         -- relativenumber = true,
         foldenable = true,
-        signcolumn = "yes",
+        signcolumn = "no",
         splitkeep = "screen",
         conceallevel = 0,
         concealcursor = "niv",
         tags = "tags",
         guifont = "JetBrainsMono Nerd Font:h12",
     }
+
+    if global.is_windows then
+        -- Neovim 在 Windows 上仅对 cmd.exe 的 shell 处理可靠：若 &shell 被自动
+        -- 检测为 git-bash，字符串形式的 system()/jobstart() 会拼成 `bash /s /c ...`
+        -- 而失败；bash + shellcmdflag='-c' 也会被 nvim 的 win32 引号逻辑破坏。
+        -- 显式固定为 cmd.exe。toggleterm 不受影响（它单独指定 bash 作为终端 shell）。
+        vim.o.shell = "cmd.exe"
+        vim.o.shellcmdflag = "/s /c"
+    end
 
     -- neovide 光标动画
     vim.g.neovide_cursor_animation_length = 0.05

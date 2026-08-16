@@ -4,12 +4,12 @@ local tools = {
     {
         -- Plenary是lua模块的集合，其他很多插件对此有依赖
         "nvim-lua/plenary.nvim",
-        lazy = true,
+        lazy = false,
     },
     {
         -- telescope是一个支持模糊搜索的插件，可以用来搜索文字或者文件
         "nvim-telescope/telescope.nvim",
-        lazy = true,
+        lazy = false,
         module = "telescope",
         cmd = "Telescope",
         config = conf.telescope,
@@ -20,20 +20,20 @@ local tools = {
     {
         -- 它允许telescope使用 fzf 相同的搜索算法
         "nvim-telescope/telescope-fzf-native.nvim",
-        lazy = true,
+        lazy = false,
         build = "make",
         dependencies = {"telescope.nvim"},
     },
     {
         -- 支持项目管理，包括创建、删除、查找等
         "nvim-telescope/telescope-project.nvim",
-        lazy = true,
+        lazy = false,
         dependencies = {"telescope-fzf-native.nvim"},
     },
     {
         -- 可以根据你的编辑历史智能选择搜索文件的优先级
         "nvim-telescope/telescope-frecency.nvim",
-        lazy = true,
+        lazy = false,
         dependencies = {
             "nvim-telescope/telescope-project.nvim",
             "kkharji/sqlite.lua",
@@ -42,7 +42,7 @@ local tools = {
     {
         -- 允许你在neovim中操作zoxide。zoxide is a smarter cd command
         "jvgrootveld/telescope-zoxide",
-        lazy = true,
+        lazy = false,
         dependencies = {"telescope-frecency.nvim"},
     },
     --[[
@@ -94,12 +94,6 @@ local tools = {
         "rhysd/accelerated-jk",
     },
     {
-        -- 基于ctags命令实现的outline
-        "preservim/tagbar",
-        lazy = true,
-        cmd = "TagbarToggle",
-    },
-    {
         -- 通过 SSH 协议连接远程服务器，编辑时同步到本地临时目录，延迟极低
         "inhesrom/remote-ssh.nvim",
         branch = "master",
@@ -110,7 +104,28 @@ local tools = {
             "rcarriga/nvim-notify",
         },
         config = conf.remote_ssh,
-    }
+    },
+    {
+        "ludovicchabant/vim-gutentags",
+        config = function()
+            vim.g.gutentags_modules = { "ctags", "gtags_cscope" }
+            vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. "/gtags"
+            vim.g.gutentags_ctags_extra_args = { "--extras=+q", "--fields=+n" }
+            vim.g.gutentags_auto_add_gtags_cscope = 0
+            -- 不依赖 .git/.svn 定位项目根：直接以 nvim 启动目录作为项目根。
+            -- 只索引该目录树内的文件，避免大项目全量索引。
+            local start_dir = vim.fn.getcwd()
+            vim.g.gutentags_project_root_finder = function(_)
+                return start_dir
+            end
+        end,
+    },
+    {
+        "skywind3000/gutentags_plus",
+        init = function()
+            vim.g.gutentags_plus_nomap = 1
+        end,
+    },
 }
 
 return tools

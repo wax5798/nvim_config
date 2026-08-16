@@ -25,6 +25,28 @@ local editor = {
         config = conf.nvim_comment,
     },
     {
+        -- 在缓冲区中渲染 Markdown，让标题、表格、代码块等直接以渲染后的样式显示
+        "MeanderingProgrammer/render-markdown.nvim",
+        lazy = true,
+        ft = "markdown",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = conf.render_markdown,
+    },
+    {
+        -- 代码大纲窗口，基于LSP/Tree-sitter后端，支持markdown等60+语言
+        "stevearc/aerial.nvim",
+        lazy = true,
+        cmd = "AerialToggle",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = conf.aerial,
+    },
+    {
         -- 提供更丰富的文本高亮能力，可以根据不同的语言，安装不同的language parser
         "nvim-treesitter/nvim-treesitter",
         lazy = true,
