@@ -36,7 +36,7 @@ local ui = {
     {
         -- 状态栏插件，从airline迁移过来
         "nvim-lualine/lualine.nvim",
-        lazy = true,
+        event = "VimEnter",
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = conf.lualine,
     },

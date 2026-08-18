@@ -404,7 +404,7 @@ function config.lualine()
     require("lualine").setup({
         options = {
             icons_enabled = true,
-            theme = "catppuccin",
+            theme = "solarized_light",
             disabled_filetypes = {},
             component_separators = { left = "|", right = "|" },
             section_separators = { left = "", right = "" },
