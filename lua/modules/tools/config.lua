@@ -52,7 +52,7 @@ function config.telescope()
             borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
             layout_strategy = "horizontal",
             path_display = { "smart" },
-            file_ignore_patterns = { ".git/", ".vscode/", ".cache", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "tags", "node_modules", "target", "dist", "__pycache__" },
+            file_ignore_patterns = { ".git/", ".vscode/", "%.cache", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip", "tags", "node_modules", "__pycache__" },
             vimgrep_arguments = {
                 "rg", "--color=never", "--no-heading",
                 "--with-filename", "--line-number", "--column", "--smart-case",
@@ -61,8 +61,6 @@ function config.telescope()
                 "--glob", "!.vscode",
                 "--glob", "!.cache",
                 "--glob", "!node_modules",
-                "--glob", "!target",
-                "--glob", "!dist",
                 "--glob", "!__pycache__",
                 "--glob", "!tags",
                 "--glob", "!*.class",
