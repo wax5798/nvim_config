@@ -151,3 +151,10 @@ set_map("v", "<space>f", "<cmd>lua require'hop'.hint_char1()<cr>", {noremap = tr
 
 -- Plugin toggleterm
 set_map("n", "<C-\\>", "<cmd>ToggleTerm<cr>", {noremap = true, silent = true})
+
+-- # 搜索：向下搜索光标下的完整单词，但保持光标不动，n 时才跳转
+vim.keymap.set('n', '#', function()
+    local word = vim.fn.expand('<cword>')
+    vim.fn.setreg('/', '\\<' .. word .. '\\>')
+    vim.opt.hlsearch = true
+end, { noremap = true, silent = true })
